@@ -1,6 +1,9 @@
 package georouting;
 
+import java.util.ArrayList
+
 public interface ConnectivityContract
 {
-  public boolean constructionConnectivity( Node n1 , Node n2 );
+  public ArrayList<Edge> constructionConnectivity( ArrayList<Nodes> nodes);
+  public int densityToNumberOfNodes(double density);
 }
