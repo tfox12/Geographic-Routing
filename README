@@ -1,0 +1,1 @@
+This is a Java framework for testing geographic routing algorithms. The framework provides settings for static or mobile environments as well as Unit Disk Graph and Quasi-Unit Disk Graph neighborhood initalization. Graphs can also be constructed from files in order to test on arbitrary graphs.
