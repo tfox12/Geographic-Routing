@@ -28,7 +28,7 @@ public class Node
   /** _x
    *  X coordinate of the node
    */
-  private double _x;
+  protected double _x;
 
   /**
    * @return the X coordinate of the node. Returned as float to discard round off error
@@ -38,7 +38,7 @@ public class Node
   /** _y
    *  Y coordinate of the node
    */
-  private double _y;
+  protected double _y;
 
   /**
    * @return THe Y coordinate of the node. Returned as a float to discard round off error

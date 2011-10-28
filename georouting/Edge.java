@@ -35,6 +35,15 @@ public class Edge
   public Line2D.Float segment() { return _segment; }
 
   /**
+   * Checks to see if this edge intersects edge e
+   * @param n the edge we are checking against this for intersection
+   */
+  public boolean intersects(Edge e)
+  {
+    return _segment.intersects(e.segment());
+  }
+
+  /**
    * Constructs an Edge ot of two nodes.
    * NOTE: neither n1 nor n2 may be instances of ImaginaryNode.
    * @param n1 Endpoint 1
@@ -49,6 +58,13 @@ public class Edge
     _segment = new Line2D.Float( n1.x(), n1.y(), n2.x(), n2.y() );
   }
 
-  public   
+  /**
+   * checks to see if either n1 or n2 is n
+   * @param n node we are checking
+   */
+  public boolean containsNode(Node n)
+  {
+    return n.equals(_n1) || n.equals(_n2);
+  }
 
 }
