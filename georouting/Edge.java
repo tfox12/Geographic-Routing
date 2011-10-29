@@ -1,5 +1,6 @@
 package georouting;
 
+import georouting.node.ImaginaryNode;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -36,11 +37,52 @@ public class Edge
 
   /**
    * Checks to see if this edge intersects edge e
+   * NOTE: edges DO NOT intersect at nodes
    * @param n the edge we are checking against this for intersection
    */
   public boolean intersects(Edge e)
   {
+    if(e.contains(n1()) || e.contains(n2()))
+    {
+      return false;
+    }
     return _segment.intersects(e.segment());
+  }
+
+  /**
+   * Creates an imaginary node at the point of intersection of 2 edges
+   * The formula used in this method comes from representing each edge in
+   * point slope form ( y - y1 = m ( x - x1) ) and solvinig for x and y
+   * @param e edge to use for intersection
+   *          PRECONDITION: e intersects this
+   */
+  public ImaginaryNode pointOfIntersection(Edge e)
+  {
+    double y1 = n1().y(),
+           x1 = n1().x(),
+           y2 = e.n1().y(),
+           x3 = e.n1().x(),
+           m1 = (n2().y() - n1().y())/(n2().x() - n1().x()),
+           m2 = (e.n2().y() - e.n1().y())/(e.n2().x() - e.n1().x());
+    double x, y;
+    if(m1 == Double.POSITIVE_INFINITY || m1 == Double.NEGATIVE_INFINITY)
+    {
+      x = x1;
+      y = m2 * (x1 - x3) + y3;
+    }
+    else if(m2 == Double.POSITIVE_INFINITY || m2 == Double.NEGATIVE_INFINITY)
+    {
+      x = x3;
+      y = m1 * (x3 - x1) + y1;
+    }
+    else
+    {
+      x = (y1 - m1 * x1 - y3 + m2 * x3) / 
+          (m2 - m1) ;
+      y = (m1 * m2 * (x3 - x1) - m1 * y3 + m2 * y1) / 
+          (m2 - m1) ;
+    }
+    return new ImaginaryNode(x,y);
   }
 
   /**
