@@ -5,7 +5,7 @@ package georouting;
  * forward packets in the network. We represent this by having the traversal algorithm
  * specifying how to traverse the graph
  */
-public abstract class TraversalAlgorithm implements Visualizable
+public abstract class TraversalAlgorithm
 {
   /** _source
    *  The starting node in the traversal algorithm
@@ -46,11 +46,18 @@ public abstract class TraversalAlgorithm implements Visualizable
    * @param s Starting point
    * @param d End point
    */
-  public TraversalAlgorithm(Node s, Node d)
+  public TraversalAlgorithm(Graph g, Node s, Node d)
   {
     _source = _current = s;
     _destination = d;
     _hops = 0;
+  }
+
+  public void paint(Graphics g)
+  {
+    _current.paint(g,Color.green);
+    _source.paint(g,Color.blue);
+    _destination.paint(g.Color.red);
   }
 
 }

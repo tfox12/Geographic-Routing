@@ -7,7 +7,15 @@ import javax.swing.JPanel;
 
 public abstract class Graph implements Visualizable
 {
-  
+  // 
+  private TraversalAlgorithm _algorithm;
+
+  /**
+   * This is not required to run an algorithm. By "attatching" an algorithm, you allow the algorithm
+   * to be attached to the visualization!
+   */
+  public void attachAlgorithm(TraversalAlgorithm a) { _algorithm = a; }
+
   /** _width
    *  width of the graph universe
    */
@@ -58,7 +66,7 @@ public abstract class Graph implements Visualizable
           {
             public void paint(Graphics g)
             {
-              Graph.paint(g);
+              visPaint(g);
             }
           };
     _canvas.preferredSize((int)width,(int)height);
@@ -103,13 +111,36 @@ public abstract class Graph implements Visualizable
     }
   }
 
+  /**
+   * returns all of the edges in the set of edges that intersect the provided edge
+   * @param e the edge we are checking for intersection
+   */
+  public ArrayList<Edge> getIntersections(Edge e)
+  {
+    ArrayList<Edge> rtn = new ArrayList<Edge>();
+    for(Edge other : _edges)
+    {
+      if(e.intersects(other))
+      {
+        rtn.add(other);
+      }
+    }
+    return rtn;
+  }
+
   ////////////////////////////////////////////////////////////////////
   // begin Visualizable interface
 
   private JPanel _canvas;
   public JPanel canvas() { return _canvas; }
 
-  public void processKeyReleased(KeyEvent e) { /* DO NOTHING */ }
+  public void processKeyReleased(KeyEvent e)
+  {
+    if(_algorithm != null)
+    {
+      _algorithm.advance();
+    }
+  }
 
   public Dimension size() { return new Dimension( (int) _width, (int) _height );  }
 
@@ -122,6 +153,10 @@ public abstract class Graph implements Visualizable
     for(Node n : _nodes)
     {
       n.paint(g,Color.black);
+    }
+    if(_algorithm != null)
+    {
+      _algorithm.paint(g);
     }
   }
 

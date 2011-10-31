@@ -90,4 +90,43 @@ public class Node
     return _parent.getNeighborhood(this);
   }
 
+  /**
+   * define equallity for 2 nodes
+   * @param o object we are checking aginst this for equality
+   */
+  @Override
+  public boolean equals(Object o)
+  {
+    if(o instanceof Node)
+    {
+      Node n = (Node)o;
+      boolean rtn = n.id() == id();
+      if(!rtn)
+      {
+        rtn = n.x() == x() && n.y() == y();
+      }
+      return rtn;
+    }
+  }
+
+  @Override
+  public int hashCode()
+  {
+    int hash = 7;
+    hash = 37 * hash + (int) (Double.doubleToLongBits(_x) ^ (Double.doubleToLongBits(_x) >>> 32));
+    hash = 37 * hash + (int) (Double.doubleToLongBits(_y) ^ (Double.doubleToLongBits(_y) >>> 32));
+    return hash;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "( " + x() + " , " + y() + " )";
+  }
+
+  public void paint(Graphics g, Color c)
+  {
+    g.setColor(c);
+    g.fillOval((int)_x-3,(int)_y-3,6,6);
+  }
 }

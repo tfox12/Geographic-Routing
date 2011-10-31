@@ -109,4 +109,34 @@ public class Edge
     return n.equals(_n1) || n.equals(_n2);
   }
 
+  @Override
+  public boolean equals(Object o)
+  {
+    if(o instanceof Edge)
+    {
+      Edge e = (Edge) o;
+      return e.contains(n1()) && e.contains(n2()) ;
+    }
+    return false;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "( " + n1() + " , " + n2() + " )";
+  }
+
+  public ArrayList<Edge> intersections()
+  {
+    return _n1.parent().getIntersections(this);
+  }
+
+  public void paint(Graphics g, Color c)
+  {
+    g.setColor(c);
+    g.drawLine(
+        (int) _n1.x(), (int) _n1.y() ,
+        (int) _n2.x(), (int) _n2.y() );
+  }
+
 }
