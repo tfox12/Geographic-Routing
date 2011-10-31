@@ -29,14 +29,12 @@ public class Visualizer extends JFrame
 
   public void begin()
   {
-    isBeingWatched(true);
     pack();
     setVisible(true);
   }
 
   public void end()
   {
-    isBeingWatched(false);
     setVisible(false);
   }
 

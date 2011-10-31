@@ -113,9 +113,6 @@ public abstract class Graph implements Visualizable
 
   public Dimension size() { return new Dimension( (int) _width, (int) _height );  }
 
-  private boolean _beingWatched;
-  public void isBeingWatched(boolean amI) { _beingWatched = amI; }
-
   public void visPaint(Graphics g)
   {
     for(Edge e : _edges)
