@@ -1,9 +1,33 @@
 package georouting;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.JPanel;
 
-public abstract class Graph
+public abstract class Graph implements Visualizable
 {
+  
+  /** _width
+   *  width of the graph universe
+   */
+  private double _width;
+
+  /**
+   * returns the width of the current graph universe
+   */
+  public float width() { return (float) _width; }
+
+  /** _height
+   *  the height of the graph universe
+   */
+  private double _height;
+
+  /**
+   * returns the height of the current graph universe
+   */
+  public float height() { return (float) _height; }
+
   /** _nodes
    *  The set of nodes in the graph
    */
@@ -28,6 +52,16 @@ public abstract class Graph
    */
   public Graph(double nodeDensity, double width, double height, ConnectivityContract cc)
   {
+    _width = width;
+    _height = height;
+    _canvas = new JPanel(true)
+          {
+            public void paint(Graphics g)
+            {
+              Graph.paint(g);
+            }
+          };
+    _canvas.preferredSize((int)width,(int)height);
     int numNodes = cc.densityToNumberOfNodes(nodeDensity);
     Node.resetIdCounter();
     Random rand = new Random();
@@ -68,6 +102,34 @@ public abstract class Graph
       }
     }
   }
+
+  ////////////////////////////////////////////////////////////////////
+  // begin Visualizable interface
+
+  private JPanel _canvas;
+  public JPanel canvas() { return _canvas; }
+
+  public void processKeyReleased(KeyEvent e) { /* DO NOTHING */ }
+
+  public Dimension size() { return new Dimension( (int) _width, (int) _height );  }
+
+  private boolean _beingWatched;
+  public void isBeingWatched(boolean amI) { _beingWatched = amI; }
+
+  public void visPaint(Graphics g)
+  {
+    for(Edge e : _edges)
+    {
+      e.paint(g,Color.black);
+    }
+    for(Node n : _nodes)
+    {
+      n.paint(g,Color.black);
+    }
+  }
+
+  // end Visualizable inteface
+  ////////////////////////////////////////////////////////////////////
 
 }
 
