@@ -66,13 +66,7 @@ public abstract class Graph implements Visualizable
     _nodes = new ArrayList<Node>();
     _width = width;
     _height = height;
-    _canvas = new JPanel(true)
-          {
-            public void paintComponent(Graphics g)
-            {
-              visPaint(g);
-            }
-          };
+    _canvas = new JPanel(true);
     _canvas.setPreferredSize(new Dimension((int)width,(int)height));
     int numNodes = cc.densityToNumberOfNodes(nodeDensity,width,height);
     Node.resetIdCounter();

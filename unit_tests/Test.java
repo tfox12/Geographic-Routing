@@ -18,6 +18,5 @@ public class Test
     // we want to visualize our graph
     Visualizer vis = new Visualizer(graph);
     vis.begin();
-    while(true);
   }
 }
