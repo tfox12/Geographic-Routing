@@ -24,9 +24,17 @@ public class ImaginaryNode extends Node
     super(x,y,null);
   }
 
+  public ImaginaryNode(Node n)
+  {
+    super(n.x(),n.y(),null);
+  }
+
   public Edge imaginaryEdgeWith(Node target)
   {
-    return new ImaginaryEdge(this,target);
+    Edge e = null;
+    try { e = new ImaginaryEdge(this,target); }
+    catch(Exception exc) { }
+    return e;
   }
 
   /**
@@ -37,11 +45,9 @@ public class ImaginaryNode extends Node
 
   class ImaginaryEdge extends Edge
   {
-    public ImaginaryEdge(ImaginaryNode n1, Node n2)
+    public ImaginaryEdge(ImaginaryNode n1, Node n2) throws Exception
     {
-      _n1 = n1;
-      _n2 = n2;
-      _segment = new Line2D.Float( n1.x(), n1.y(), n2.x(), n2.y() );
+      super(new Node(n1.x(),n1.y(),null),n2);
     }
   }
 }

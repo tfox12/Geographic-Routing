@@ -135,10 +135,6 @@ public abstract class Graph implements Visualizable
 
   public void processKeyReleased(KeyEvent e)
   {
-    if(_algorithm != null && !_algorithm.done())
-    {
-      _algorithm.advance();
-    }
     _canvas.repaint();
   }
 

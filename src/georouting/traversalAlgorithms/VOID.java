@@ -1,10 +1,12 @@
 package georouting.traversalAlgorithms;
 
+import georouting.Edge;
+import georouting.Graph;
 import georouting.Node;
 import georouting.TraversalAlgorithm;
 import georouting.node.ImaginaryNode;
 
-import java.awt.ArrayList;
+import java.util.ArrayList;
 
 public class VOID extends TraversalAlgorithm
 {
@@ -29,7 +31,9 @@ public class VOID extends TraversalAlgorithm
       firstRun();
       return;
     }
-    Edge justTraversed = new Edge(_previous,_current);
+    Edge justTraversed = null;
+    try { justTraversed = new Edge(_previous,_current); }
+    catch(Exception e) { System.err.println("Critical Eror"); System.exit(1); }
     ArrayList<Edge> traversedIntersections = justTraversed.intersections();
     if(_butIDidThatLastTime != null)
     {
@@ -63,10 +67,30 @@ public class VOID extends TraversalAlgorithm
     return;
   }
 
+  private void firstRun()
+  {
+    _dir = Direction.CLOCKWISE;
+    Node cwWinner = bestNeighbor();
+    double cwAngle = getNodeAngle(_destination,_current,cwWinner);
+    _dir = Direction.COUNTERCLOCKWISE;
+    Node ccwWinner = bestNeighbor();
+    double ccwAngle = getNodeAngle(_destination,_current,ccwWinner);
+    if(cwAngle < ccwAngle)
+    {
+      _dir = Direction.CLOCKWISE;
+      moveTo(cwWinner);
+    }
+    else
+    {
+      moveTo(ccwWinner);
+    }
+    advanceX();
+  }
+
   private boolean handledIntersection(ArrayList<Edge> traversedIntersections, Edge justTraversed)
   {
     ArrayList<Edge> winners = new ArrayList<Edge>();
-    Node winningPoint = null;
+    ImaginaryNode winningPoint = null;
     double dist = Double.MAX_VALUE;
     for(Edge edge : traversedIntersections)
     {
@@ -76,7 +100,7 @@ public class VOID extends TraversalAlgorithm
         dist = temp.distance(_previous);
         winners.clear();
         winners.add(edge);
-        winningPoint = temp;
+        winningPoint = new ImaginaryNode(temp);
       }
     }
     if(winners.isEmpty())
@@ -84,12 +108,12 @@ public class VOID extends TraversalAlgorithm
       return false;
     }
     _butIDidThatLastTime = justTraversed;
-    justTraversed = new Edge(_previous,winningPoint);
+    justTraversed = winningPoint.imaginaryEdgeWith(_previous);
     if(justTraversed.intersects(xd()))
     {
       _X = justTraversed.pointOfIntersection(xd());
     }
-    if(justTraversed.distance(_X))
+    if(justTraversed.distance(_X) == 0)
     {
       flipDirection();
       advanceX();
@@ -98,8 +122,8 @@ public class VOID extends TraversalAlgorithm
     double winningAngle = Double.MAX_VALUE;
     for(Edge edge : winners)
     {
-      float a1 = getAngle(_previous,winningPoint,edge.n1());
-      float a2 = getAngle(_previous,winningPoint,edge.n2());
+      float a1 = getNodeAngle(_previous,winningPoint,edge.n1());
+      float a2 = getNodeAngle(_previous,winningPoint,edge.n2());
       if(a1 < winningAngle)
       {
         nextRoundWinners.clear();
@@ -120,24 +144,25 @@ public class VOID extends TraversalAlgorithm
       {
         nextRoundWinners.add(edge.n2());
       }
-      Node finalWinner = null;
-      double distance = Double.MAX_DISTANCE;
-      for(Node node : nextRoundWinners)
+    }
+    Node finalWinner = null;
+    double distance = Double.MAX_VALUE;
+    for(Node node : nextRoundWinners)
+    {
+      if(node.distance(winningPoint) < distance)
       {
-        if(node.distance(winningPoint) < distance)
-        {
-          finalWinner = n;
-          distance = node.distance(winningPoint);
-        }
+        finalWinner = node;
+        distance = node.distance(winningPoint);
       }
-      for(Edge edge : winners)
+    }
+    _hops += movesToGetThere(_current,finalWinner);
+    for(Edge edge : winners)
+    {
+      if(edge.containsNode(finalWinner))
       {
-        if(edge.contains(finalWinner))
-        {
-          _current = finalWinner;
-          _previous = ( edge.n1().equals(finalWinner) ) ? edge.e2() : edge.n1();
-          break;
-        }
+        _current = finalWinner;
+        _previous = ( edge.n1().equals(finalWinner) ) ? edge.n2() : edge.n1();
+        break;
       }
     }
     return true;
@@ -148,14 +173,14 @@ public class VOID extends TraversalAlgorithm
     super(g,s,f);
     _previous = null;
     _dir = Direction.CLOCKWISE;
-    _X = (ImaginaryNode) s;
+    _X = new ImaginaryNode(s);
     _butIDidThatLastTime = null;
   }
 
   private void moveTo(Node n)
   {
     _previous = _current;
-    current = n;
+    _current = n;
     ++_hops;
   }
 
@@ -171,8 +196,8 @@ public class VOID extends TraversalAlgorithm
   private void advanceX()
   {
     ImaginaryNode winner = null;
-    double dinst = DOUBLE.MAX_VALUE;
-    ArrayList<Edge edges = _container.getIntersections(xd());
+    double dist = Double.MAX_VALUE;
+    ArrayList<Edge> edges = _container.getIntersections(xd());
     for(Edge e : edges)
     {
       ImaginaryNode temp = e.pointOfIntersection(xd());
@@ -182,7 +207,7 @@ public class VOID extends TraversalAlgorithm
         dist = temp.distance(_X);
       }
     }
-    _X = ( winner == null ) ? _destination : winner;
+    _X = ( winner == null ) ? new ImaginaryNode(_destination) : winner;
   }
 
   private Edge _butIDidThatLastTime;
@@ -192,7 +217,7 @@ public class VOID extends TraversalAlgorithm
   private void flipDirection()
   {
     float x1 = -( _current.y() - _previous.y());
-    float y1 = _current.x() - previous.x();
+    float y1 = _current.x() - _previous.x();
     float x2 = _destination.x() - _previous.x();
     float y2 = _destination.y() - _previous.y();
     double dot_product = x1*x2 + y1*y2;
@@ -207,16 +232,16 @@ public class VOID extends TraversalAlgorithm
     double angle = Double.MAX_VALUE;
     for(Node n : neighborhood)
     {
-      if(getAngle(n) > 0 && getAngle(n) < angle)
+      if(getNodeAngle(n) > 0 && getNodeAngle(n) < angle)
       {
-        angle = getAngle(n);
+        angle = getNodeAngle(n);
         rtn = n;
       }
     }
     return rtn;
   }
 
-  private gloat getNodeAngle(Node a)
+  private float getNodeAngle(Node a)
   {
     return getNodeAngle( 
         ( ( _previous == null ) ? _destination : _previous ) , 
@@ -236,7 +261,7 @@ public class VOID extends TraversalAlgorithm
 
   private int movesToGetThere(Node start,Node dest)
   {
-    SHORTEST shortestsPath = new SHORTESTS(_container,start,dest);
+    SHORTEST shortestsPath = new SHORTEST(_container,start,dest);
     while(!shortestsPath.done())
     {
       shortestsPath.advance();

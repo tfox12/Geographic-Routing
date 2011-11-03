@@ -50,12 +50,12 @@ public class Node
 
   private Point2D.Float _point;
 
-  public Point2D.Float point() { return _float; }
+  public Point2D.Float point() { return _point; }
 
   /** _parent
    *  Graph that contains this node
    */
-  potected Graph _parent;
+  protected Graph _parent;
 
   /**
    * @return The parent graph
@@ -73,7 +73,7 @@ public class Node
     _id = _IDCOUNTER++;
     _x = x;
     _y = y;
-    _point = new Point.Float((float)x,(float)y);
+    _point = new Point2D.Float((float)x,(float)y);
     _parent = g;
   }
 

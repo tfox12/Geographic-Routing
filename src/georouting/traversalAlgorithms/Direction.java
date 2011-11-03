@@ -1,4 +1,4 @@
-package georouting.traversalAlgorithm;
+package georouting.traversalAlgorithms;
 
 /**
  * Direction is used by the face routing varients to specify what direction

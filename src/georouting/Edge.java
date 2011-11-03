@@ -53,7 +53,7 @@ public class Edge
 
   public float distance(Node n)
   {
-    return _segment.ptSegDist(n.point());
+    return (float) _segment.ptSegDist(n.point());
   }
 
   /**
