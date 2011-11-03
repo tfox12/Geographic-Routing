@@ -43,6 +43,7 @@ public abstract class Graph implements Visualizable
    *  The set of nodes in the graph
    */
   private ArrayList<Node> _nodes;
+  public ArrayList<Node> nodes() { return _nodes; }
 
   /** _edges
    *  The set of edges in the graph
@@ -66,7 +67,14 @@ public abstract class Graph implements Visualizable
     _nodes = new ArrayList<Node>();
     _width = width;
     _height = height;
-    _canvas = new JPanel(true);
+    _canvas = new JPanel(true)
+    {
+      @Override
+      public void paintComponent(Graphics g)
+      {
+        visPaint(g);
+      }
+    };
     _canvas.setPreferredSize(new Dimension((int)width,(int)height));
     int numNodes = cc.densityToNumberOfNodes(nodeDensity,width,height);
     Node.resetIdCounter();
@@ -135,10 +143,17 @@ public abstract class Graph implements Visualizable
 
   public void processKeyReleased(KeyEvent e)
   {
-    if(_algorithm != null)
+    if(_algorithm != null && !_algorithm.done())
     {
       _algorithm.advance();
     }
+    _canvas.repaint();
+  }
+
+  @Override
+  public String toString()
+  {
+    return "This graph contains " + _nodes.size() + " nodes";
   }
 
   public Dimension size() { return new Dimension( (int) _width, (int) _height );  }
@@ -152,10 +167,6 @@ public abstract class Graph implements Visualizable
     for(Node n : _nodes)
     {
       n.paint(g,Color.black);
-    }
-    if(_algorithm != null)
-    {
-      _algorithm.paint(g);
     }
   }
 
