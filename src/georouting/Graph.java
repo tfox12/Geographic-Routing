@@ -64,6 +64,7 @@ public abstract class Graph implements Visualizable
       @Override
       public void paintComponent(Graphics g)
       {
+        g.clearRect(0,0,_width,_height);
         visPaint(g);
       }
     };

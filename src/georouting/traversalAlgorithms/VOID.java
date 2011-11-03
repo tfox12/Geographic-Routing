@@ -6,6 +6,8 @@ import georouting.Node;
 import georouting.TraversalAlgorithm;
 import georouting.node.ImaginaryNode;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class VOID extends TraversalAlgorithm
@@ -58,7 +60,7 @@ public class VOID extends TraversalAlgorithm
     {
       _X = justTraversed.pointOfIntersection(xd());
     }
-    if(justTraversed.distance(_X) == 0)
+    if(justTraversed.distance(_X) < .00001)
     {
       flipDirection();
       advanceX();
@@ -87,6 +89,14 @@ public class VOID extends TraversalAlgorithm
     advanceX();
   }
 
+  @Override
+  public void visPaint(Graphics g)
+  {
+    super.visPaint(g);
+    xd().paint(g,Color.cyan);
+    canvas().repaint();
+  }
+
   private boolean handledIntersection(ArrayList<Edge> traversedIntersections, Edge justTraversed)
   {
     ArrayList<Edge> winners = new ArrayList<Edge>();
@@ -113,7 +123,7 @@ public class VOID extends TraversalAlgorithm
     {
       _X = justTraversed.pointOfIntersection(xd());
     }
-    if(justTraversed.distance(_X) == 0)
+    if(justTraversed.distance(_X) < .00001)
     {
       flipDirection();
       advanceX();
