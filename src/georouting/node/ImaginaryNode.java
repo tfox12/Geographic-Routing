@@ -1,5 +1,6 @@
 package georouting.node;
 
+import georouting.Edge;
 import georouting.Node;
 
 import java.util.ArrayList;
@@ -23,10 +24,24 @@ public class ImaginaryNode extends Node
     super(x,y,null);
   }
 
+  public Edge imaginaryEdgeWith(Node target)
+  {
+    return new ImaginaryEdge(this,target);
+  }
 
   /**
    * Should not be used, could throw an exception... we'll see where this goes
    */
   @Override
   public ArrayList<Node> neighborhood() { return null; }
+
+  class ImaginaryEdge extends Edge
+  {
+    public ImaginaryEdge(ImaginaryNode n1, Node n2)
+    {
+      _n1 = n1;
+      _n2 = n2;
+      _segment = new Line2D.Float( n1.x(), n1.y(), n2.x(), n2.y() );
+    }
+  }
 }

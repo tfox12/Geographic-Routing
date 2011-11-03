@@ -48,7 +48,7 @@ public abstract class TraversalAlgorithm implements Visualizable
    */
   public abstract boolean done();
 
-  private Graph _container;
+  protected Graph _container;
 
   /**
    * @param s Starting point

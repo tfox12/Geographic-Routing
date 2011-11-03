@@ -10,14 +10,6 @@ import javax.swing.JPanel;
 
 public abstract class Graph implements Visualizable
 {
-  // 
-  private TraversalAlgorithm _algorithm;
-
-  /**
-   * This is not required to run an algorithm. By "attatching" an algorithm, you allow the algorithm
-   * to be attached to the visualization!
-   */
-  public void attachAlgorithm(TraversalAlgorithm a) { _algorithm = a; }
 
   /** _width
    *  width of the graph universe

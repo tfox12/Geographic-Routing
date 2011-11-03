@@ -11,7 +11,7 @@ public class Edge
   /** _n1
    *  One of the endpoints of the edge
    */
-  private Node _n1;
+  protected Node _n1;
 
   /**
    * @return Endpoint 1 of the edge
@@ -21,7 +21,7 @@ public class Edge
   /** _n2
    *  Node of the endpoints of the edge
    */
-  private Node _n2;
+  protected Node _n2;
   /**
    * @return Endpoint 2 of the edge
    */
@@ -49,6 +49,11 @@ public class Edge
       return false;
     }
     return _segment.intersectsLine(e.segment());
+  }
+
+  public float distance(Node n)
+  {
+    return _segment.ptSegDist(n.point());
   }
 
   /**

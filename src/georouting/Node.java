@@ -2,6 +2,7 @@ package georouting;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Node
@@ -47,10 +48,14 @@ public class Node
    */
   public float y() { return (float) _y; }
 
+  private Point2D.Float _point;
+
+  public Point2D.Float point() { return _float; }
+
   /** _parent
    *  Graph that contains this node
    */
-  protected Graph _parent;
+  potected Graph _parent;
 
   /**
    * @return The parent graph
@@ -68,6 +73,7 @@ public class Node
     _id = _IDCOUNTER++;
     _x = x;
     _y = y;
+    _point = new Point.Float((float)x,(float)y);
     _parent = g;
   }
 
