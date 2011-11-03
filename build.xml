@@ -4,20 +4,30 @@
   <target name="init">
     <mkdir dir="build/classes" />
     <mkdir dir="dist" />
+    <mkdir dir="unit_tests/classes" />
     <mkdir dir="javadoc" />
   </target>
 
   <target name="compile" depends="init">
     <javac srcdir="src" destdir="build/classes" />
+    <javac srcdir="unit_tests" destdir="unit_tests/classes" />
   </target>
                       
   <target name="compress" depends="compile">
     <jar destfile="dist/georouting.jar" basedir="build/classes" />
   </target>
-                                    
+    
+  <target name="test" depends="compress">
+    <java classname="georouting.tests.Test">
+      <classpath location="dist/georouting.jar" path="unit_tests/classes"/>
+    </java>
+  </target>
+
   <target name="clean">
     <delete dir="build" />
     <delete dir="dist" />
+    <delete dir="unit_tests/classes" />
+    <delete file="unit_tests/georouting.jar" />
   </target>
 
   <target name="docs" depends="init">
