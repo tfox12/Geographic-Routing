@@ -4,6 +4,7 @@
   <target name="init">
     <mkdir dir="build/classes" />
     <mkdir dir="dist" />
+    <mkdir dir="javadoc" />
   </target>
 
   <target name="compile" depends="init">
@@ -17,6 +18,14 @@
   <target name="clean">
     <delete dir="build" />
     <delete dir="dist" />
+  </target>
+
+  <target name="docs" depends="init">
+    <javadoc sourcepath="src"
+             destdir="javadoc"
+             packagenames="georouting.*"
+             doctitle="FoxyGraph API Documentation"
+    />
   </target>
 
 </project>
