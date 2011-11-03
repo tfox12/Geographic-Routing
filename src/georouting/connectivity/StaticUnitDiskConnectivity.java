@@ -6,7 +6,7 @@ import georouting.Edge;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-class StaticUnitDiskConnectivity implements ConnectivityContract
+public class StaticUnitDiskConnectivity implements ConnectivityContract
 {
 
   private double _radius;

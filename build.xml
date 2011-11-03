@@ -10,16 +10,22 @@
 
   <target name="compile" depends="init">
     <javac srcdir="src" destdir="build/classes" />
-    <javac srcdir="unit_tests" destdir="unit_tests/classes" />
+  </target>
+
+  <target name="compileTest" depends="compress">
+    <javac srcdir="unit_tests" destdir="unit_tests/classes" classpath="dist/georouting.jar" />
   </target>
                       
   <target name="compress" depends="compile">
     <jar destfile="dist/georouting.jar" basedir="build/classes" />
   </target>
     
-  <target name="test" depends="compress">
+  <target name="test" depends="compileTest">
     <java classname="georouting.tests.Test">
-      <classpath location="dist/georouting.jar" path="unit_tests/classes"/>
+      <classpath>
+        <pathelement location="dist/georouting.jar" />
+        <pathelement location="unit_tests/classes/" />
+      </classpath>
     </java>
   </target>
 
@@ -27,7 +33,6 @@
     <delete dir="build" />
     <delete dir="dist" />
     <delete dir="unit_tests/classes" />
-    <delete file="unit_tests/georouting.jar" />
   </target>
 
   <target name="docs" depends="init">

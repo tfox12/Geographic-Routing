@@ -63,6 +63,7 @@ public abstract class Graph implements Visualizable
    */
   public Graph(double nodeDensity, double width, double height, ConnectivityContract cc)
   {
+    _nodes = new ArrayList<Node>();
     _width = width;
     _height = height;
     _canvas = new JPanel(true)
