@@ -4,7 +4,8 @@ import georouting.ConnectivityContract;
 import georouting.Node;
 import georouting.Edge;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.HashSet;
+import java.util.Random;
 
 class StaticQuasiUnitDiskConnectivity implements ConnectivityContract
 {
@@ -21,7 +22,7 @@ class StaticQuasiUnitDiskConnectivity implements ConnectivityContract
 
   public float probability() { return (float) _probability; }
 
-  public StaticQuasiUnitDiskConnectivity(double radius double innerRadius, double probability) throws Exception
+  public StaticQuasiUnitDiskConnectivity(double radius, double innerRadius, double probability) throws Exception
   {
     if((float) probability > 1) 
     {
@@ -32,9 +33,9 @@ class StaticQuasiUnitDiskConnectivity implements ConnectivityContract
     _probability = probability;
   }
 
-  public ArrayList<Edge> constructionConnectivity(ArrayList<Nodes> nodes)
+  public ArrayList<Edge> constructionConnectivity(ArrayList<Node> nodes)
   {
-    Set<Edge> rtn = new Set<Edge>();
+    HashSet<Edge> rtn = new HashSet<Edge>();
     for(Node a : nodes)
     {
       for(Node b : nodes)
@@ -43,7 +44,9 @@ class StaticQuasiUnitDiskConnectivity implements ConnectivityContract
             (a.distance(b) <= innerRadius() ||
             (a.distance(b) <= radius() && new Random().nextDouble() <= probability() )))
         {
-          rtn.add(new Edge(a,b));
+          try{
+            rtn.add(new Edge(a,b));
+          }catch(Exception e){  }
         }
       }
     }

@@ -1,4 +1,8 @@
+package georouting;
+
+import java.util.ArrayList;
+
 public interface MobileConnectivityContract extends ConnectivityContract
 {
-  public boolean updateConnectivity(Node n1, Node n2);
+  public ArrayList<Edge> updateConnectivity(ArrayList<Node> nodes);
 }

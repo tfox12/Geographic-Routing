@@ -1,4 +1,4 @@
-package georouting;
+package georouting.node;
 
 import java.util.Random;
 import georouting.Node;
@@ -64,13 +64,13 @@ public class MobileNode extends Node
     else if(distance(_dest) < (float) _moveSpeed )
     {
       _x = _dest.x();
-      _y = _desy.y();
+      _y = _dest.y();
       _waitCount = _WAITLENGTH;
       setNewDestination();
     }
     else
     {
-      float theta = Math.atan2( _dest.y() - y() , _dest.x() - x() );
+      float theta = (float) Math.atan2( _dest.y() - y() , _dest.x() - x() );
       _x += (float)(Math.cos(theta) * _moveSpeed);
       _y += (float)(Math.cos(theta) * _moveSpeed);
     }
@@ -82,8 +82,8 @@ public class MobileNode extends Node
   private void setNewDestination()
   {
     Random r = new Random();
-    double x = r.nextDouble() * g.width();
-    double y = r.nextDouble() * g.height();
+    double x = r.nextDouble() * _parent.width();
+    double y = r.nextDouble() * _parent.height();
     _dest = new ImaginaryNode(x,y);
     _moveSpeed = r.nextDouble() * _MAXSPEED;
   }

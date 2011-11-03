@@ -10,16 +10,16 @@ public class Visualizer extends JFrame
 {
   private Visualizable _content;
 
-  public Visulizer(Visualizable v)
+  public Visualizer(Visualizable v)
   {
     _content = v;
     setPreferredSize(v.size());
-    JScrollPane jsp = new JScrollPane(g.canvas());
+    JScrollPane jsp = new JScrollPane(v.canvas());
     getContentPane().add(jsp);
-    addKeyListener(new KeyAdapeter()
+    addKeyListener(new KeyAdapter()
           {
             @Override
-            public void keyRelease(KeyEvent e)
+            public void keyReleased(KeyEvent e)
             {
               _content.processKeyReleased(e);
             }

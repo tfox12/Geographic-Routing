@@ -1,5 +1,7 @@
 package georouting;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Node
@@ -48,7 +50,7 @@ public class Node
   /** _parent
    *  Graph that contains this node
    */
-  private Graph _parent;
+  protected Graph _parent;
 
   /**
    * @return The parent graph
@@ -77,8 +79,8 @@ public class Node
   public float distance(Node other)
   {
     return (float) Math.sqrt(
-        Math.pow(other.y() - y() ) +
-        Math.pow(other.x() - x() ) );
+        Math.pow(other.y() - y() , 2 ) +
+        Math.pow(other.x() - x() , 2 ) );
   }
   
   /**
@@ -107,6 +109,7 @@ public class Node
       }
       return rtn;
     }
+    return false;
   }
 
   @Override

@@ -1,9 +1,16 @@
-package georouting.traversalAlgorithm;
+package georouting.traversalAlgorithms;
 
+import georouting.Graph;
+import georouting.Node;
 import georouting.TraversalAlgorithm;
 
 public class GREEDY extends TraversalAlgorithm
 {
+
+  public GREEDY(Graph g,Node s,Node f)
+  {
+    super(g,s,f);
+  }
 
   public void advance()
   {
@@ -18,7 +25,7 @@ public class GREEDY extends TraversalAlgorithm
   private Node nextNode()
   {
     Node winner = null;
-    float tempDist = _current.distanace(_destination);
+    float tempDist = _current.distance(_destination);
     for(Node n : _current.neighborhood() )
     {
       if(n.distance(_destination) < tempDist)

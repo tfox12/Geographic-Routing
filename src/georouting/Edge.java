@@ -1,6 +1,8 @@
 package georouting;
 
 import georouting.node.ImaginaryNode;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ public class Edge
   /** _segment
    *  This is used to aid computation of intersections
    */
-  private Line2D.Float _segment
+  private Line2D.Float _segment;
 
   /**
    * @return The geometric segment in euclidean space representing the edge
@@ -42,11 +44,11 @@ public class Edge
    */
   public boolean intersects(Edge e)
   {
-    if(e.contains(n1()) || e.contains(n2()))
+    if(e.containsNode(n1()) || e.containsNode(n2()))
     {
       return false;
     }
-    return _segment.intersects(e.segment());
+    return _segment.intersectsLine(e.segment());
   }
 
   /**
@@ -60,7 +62,7 @@ public class Edge
   {
     double y1 = n1().y(),
            x1 = n1().x(),
-           y2 = e.n1().y(),
+           y3 = e.n1().y(),
            x3 = e.n1().x(),
            m1 = (n2().y() - n1().y())/(n2().x() - n1().x()),
            m2 = (e.n2().y() - e.n1().y())/(e.n2().x() - e.n1().x());
@@ -93,7 +95,7 @@ public class Edge
    */
   public Edge(Node n1, Node n2) throws Exception
   {
-    if(n1 instanceof node.ImaginaryNode || n2 instanceof node.ImaginaryNode)
+    if(n1 instanceof ImaginaryNode || n2 instanceof ImaginaryNode)
       throw new Exception("Wrong use of Imaginary Node");
     _n1 = n1;
     _n2 = n2;
@@ -115,7 +117,7 @@ public class Edge
     if(o instanceof Edge)
     {
       Edge e = (Edge) o;
-      return e.contains(n1()) && e.contains(n2()) ;
+      return e.containsNode(n1()) && e.containsNode(n2()) ;
     }
     return false;
   }

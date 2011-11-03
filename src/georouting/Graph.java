@@ -2,7 +2,10 @@ package georouting;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JPanel;
 
 public abstract class Graph implements Visualizable
@@ -64,15 +67,15 @@ public abstract class Graph implements Visualizable
     _height = height;
     _canvas = new JPanel(true)
           {
-            public void paint(Graphics g)
+            public void paintComponent(Graphics g)
             {
               visPaint(g);
             }
           };
-    _canvas.preferredSize((int)width,(int)height);
-    int numNodes = cc.densityToNumberOfNodes(nodeDensity);
+    _canvas.setPreferredSize(new Dimension((int)width,(int)height));
+    int numNodes = cc.densityToNumberOfNodes(nodeDensity,width,height);
     Node.resetIdCounter();
-    Random rand = new Random();
+    Random r = new Random();
     for(int i = 0; i < numNodes; ++i)
     {
       Node temp = spawnNode( r.nextDouble() * width , r.nextDouble() * height );
@@ -83,7 +86,7 @@ public abstract class Graph implements Visualizable
           temp = null;
         }
       }
-      if(Node == null)
+      if(temp == null)
       {
         --i; // redo this iteration
       }
@@ -109,6 +112,7 @@ public abstract class Graph implements Visualizable
         rtn.add( n.equals(e.n2()) ? e.n1() : e.n2() );
       }
     }
+    return rtn;
   }
 
   /**

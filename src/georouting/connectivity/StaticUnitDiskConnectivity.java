@@ -4,7 +4,7 @@ import georouting.ConnectivityContract;
 import georouting.Node;
 import georouting.Edge;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.HashSet;
 
 class StaticUnitDiskConnectivity implements ConnectivityContract
 {
@@ -18,16 +18,24 @@ class StaticUnitDiskConnectivity implements ConnectivityContract
     _radius = radius;
   }
 
-  public ArrayList<Edge> constructionConnectivity(ArrayList<Nodes> nodes)
+  public ArrayList<Edge> constructionConnectivity(ArrayList<Node> nodes)
   {
-    Set<Edge> rtn = new Set<Edge>();
+    HashSet<Edge> rtn = new HashSet<Edge>();
     for(Node a : nodes)
     {
       for(Node b : nodes)
       {
         if( !a.equals(b) && a.distance(b) <= radius() )
         {
-          rtn.add(new Edge(a,b));
+          try
+          {
+            rtn.add(new Edge(a,b));
+          }
+          catch(Exception e)
+          { 
+            System.err.println(
+              "ERROR: you just tried to justify the existance on an Imaginary Node. STOP THAT!"); 
+          }
         }
       }
     }

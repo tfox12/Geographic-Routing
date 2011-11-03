@@ -1,0 +1,22 @@
+<?xml version="1.0" ?> 
+<project name="HelloWorld" default="compress">
+
+  <target name="init">
+    <mkdir dir="build/classes" />
+    <mkdir dir="dist" />
+  </target>
+
+  <target name="compile" depends="init">
+    <javac srcdir="src" destdir="build/classes" />
+  </target>
+                      
+  <target name="compress" depends="compile">
+    <jar destfile="dist/georouting.jar" basedir="build/classes" />
+  </target>
+                                    
+  <target name="clean">
+    <delete dir="build" />
+    <delete dir="dist" />
+  </target>
+
+</project>

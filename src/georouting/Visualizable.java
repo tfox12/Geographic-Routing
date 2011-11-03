@@ -2,8 +2,8 @@ package georouting;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.JPanel;
 import java.awt.event.KeyEvent;
+import javax.swing.JPanel;
 
 public interface Visualizable
 {

@@ -1,30 +1,31 @@
-package georouting.traversalAlgorithm;
+package georouting.traversalAlgorithms;
 
+import georouting.Graph;
 import georouting.Node;
 import georouting.TraversalAlgorithm;
-import java.util.Set;
+import java.util.HashSet;
 
 public class SHORTEST extends TraversalAlgorithm
 {
 
-  private Set<Node> _visited;
-  private Set<Node> _heads;
+  private HashSet<Node> _visited;
+  private HashSet<Node> _heads;
 
-  public SHORTEST(Node s, Node f)
+  public SHORTEST(Graph g, Node s, Node f)
   {
-    super(s,f);
-    _visited = new Set<Node>();
-    _head = new Set<Node>();
+    super(g,s,f);
+    _visited = new HashSet<Node>();
+    _heads = new HashSet<Node>();
     _visited.add(s);
-    _start.add(s);
+    _heads.add(s);
   }
 
   public void advance()
   {
-    Set<Node> nextHeads = new Set<Node>();
+    HashSet<Node> nextHeads = new HashSet<Node>();
     for(Node n : _heads)
     {
-      for(Node next : n.neghborhood() )
+      for(Node next : n.neighborhood() )
       {
         if(_visited.add(next))
         { // this neighbor was not visited yet! its next to be in head
@@ -38,6 +39,6 @@ public class SHORTEST extends TraversalAlgorithm
 
   public boolean done()
   {
-    return _head.contains(_destination);
+    return _heads.contains(_destination);
   }
 }

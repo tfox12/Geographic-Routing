@@ -1,5 +1,8 @@
 package georouting;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
  * The traversal algorithm is the meat of the framework. It specifies how we want to
  * forward packets in the network. We represent this by having the traversal algorithm
@@ -57,7 +60,7 @@ public abstract class TraversalAlgorithm
   {
     _current.paint(g,Color.green);
     _source.paint(g,Color.blue);
-    _destination.paint(g.Color.red);
+    _destination.paint(g,Color.red);
   }
 
 }
