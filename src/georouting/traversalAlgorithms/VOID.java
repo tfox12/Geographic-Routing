@@ -60,7 +60,7 @@ public class VOID extends TraversalAlgorithm
     {
       _X = justTraversed.pointOfIntersection(xd());
     }
-    if(justTraversed.distance(_X) < .00001)
+    if(justTraversed.distance(_X) < .0001)
     {
       flipDirection();
       advanceX();
@@ -123,7 +123,7 @@ public class VOID extends TraversalAlgorithm
     {
       _X = justTraversed.pointOfIntersection(xd());
     }
-    if(justTraversed.distance(_X) < .00001)
+    if(justTraversed.distance(_X) < .0001)
     {
       flipDirection();
       advanceX();
