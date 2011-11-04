@@ -27,6 +27,11 @@ public class MobileGraph extends Graph
     _nodeSpeed = nodeSpeed;
     _pauseTime = pauseTime;
     _connectivity = mcc;
+	  for( Node n : _nodes)
+	  {
+		  ((MobileNode) n).setSpeed(nodeSpeed);
+		  ((MobileNode) n).setPause(pauseTime);
+	  }
   }
 
   @Override

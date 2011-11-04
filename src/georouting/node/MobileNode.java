@@ -31,6 +31,14 @@ public class MobileNode extends Node
    */
   private ImaginaryNode _dest;
 
+  private final double DEFAULT_SPEED = 1;
+
+	public void setSpeed(double s) { _maxSpeed = s; }
+	
+  private final int DEFAULT_PAUSE = 5;
+	
+	public void setPause(int p) { _waitLength = p; }
+	
   /**
    * @param x X coordinate
    * @param y Y coordinate
@@ -39,11 +47,14 @@ public class MobileNode extends Node
   public MobileNode(double x,double y,double maxSpeed,int pauseLength,Graph g)
   {
     super(x,y,g);
-    _maxSpeed = maxSpeed;
-    _waitLength = pauseLength;
+    _maxSpeed = DEFAULT_SPEED;
+    _waitLength = DEFAULT_PAUSE;
+    _waitCount = 0;
     setNewDestination();
   }
 
+	private boolean leftOf;
+	
   /**
    * If the node is not at its destination, it moves to it
    * This will also increment the wait period if already at the destination
@@ -52,7 +63,7 @@ public class MobileNode extends Node
   public void move()
   {
     if(_waitCount > 0) { --_waitCount; }
-    else if(distance(_dest) < (float) _moveSpeed )
+    else if(distance(_dest) < _moveSpeed || x() < _dest.x() != leftOf)
     {
       _x = _dest.x();
       _y = _dest.y();
@@ -61,9 +72,9 @@ public class MobileNode extends Node
     }
     else
     {
-      float theta = (float) Math.atan2( _dest.y() - y() , _dest.x() - x() );
-      _x += (float)(Math.cos(theta) * _moveSpeed);
-      _y += (float)(Math.cos(theta) * _moveSpeed);
+	  double theta = Math.atan2( _dest.y() - y() , _dest.x() - x() );
+      _x += (Math.cos(theta) * _moveSpeed);
+      _y += (Math.sin(theta) * _moveSpeed);
     }
   }
 
@@ -77,6 +88,7 @@ public class MobileNode extends Node
     double y = r.nextDouble() * _parent.height();
     _dest = new ImaginaryNode(x,y);
     _moveSpeed = r.nextDouble() * _maxSpeed;
+	  leftOf = x() < _dest.x();
   }
 
 }

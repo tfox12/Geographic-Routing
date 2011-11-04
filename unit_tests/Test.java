@@ -17,7 +17,7 @@ public class Test
 
     // construct a static graph using a node density of 2, 
     //    width of 600px, height of 600px, nand our connectivity model
-    Graph graph = new MobileGraph(1,10,5,600,600,cc);
+    Graph graph = new MobileGraph(5,10,5,600,600,cc);
     
     // we want to visualize our graph
     Visualizer vis = new Visualizer(graph);
