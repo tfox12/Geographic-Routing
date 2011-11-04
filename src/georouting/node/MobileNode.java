@@ -14,29 +14,18 @@ public class MobileNode extends Node
   /** _MAXSPEED
    *  defines the upper limit on the speed
    */
-  private static double _MAXSPEED = 0;
-
-  /**
-   * @param ms the new max speed for all of the mobile nodes
-   */
-  public static void setMaxSpeed(double ms) { _MAXSPEED = ms; }
+  private double _maxSpeed;
 
   /** _WAITLENGTH
    *  defines how many frames a node should wait once it has reached its destination
    */
-  private static int _WAITLENGTH = 0;
+  private int _waitLength;
 
   /** _waitCount
    *  If in wait mode, then this is incremented until it equals _WAITLENGTH
    */
   private int _waitCount;
 
-  /**
-   * sets the waitcount for all nodes
-   * @param val how many frames one should wait until beginning to move once more
-   */
-  public static void setWaitLength(int val) { _WAITLENGTH = val; }
-  
   /**
    * represents where the node is trying to move to
    */
@@ -47,9 +36,11 @@ public class MobileNode extends Node
    * @param y Y coordinate
    * @param g Parent graph
    */
-  public MobileNode(double x,double y,Graph g)
+  public MobileNode(double x,double y,double maxSpeed,int pauseLength,Graph g)
   {
     super(x,y,g);
+    _maxSpeed = maxSpeed;
+    _waitLength = pauseLength;
     setNewDestination();
   }
 
@@ -65,7 +56,7 @@ public class MobileNode extends Node
     {
       _x = _dest.x();
       _y = _dest.y();
-      _waitCount = _WAITLENGTH;
+      _waitCount = _waitLength;
       setNewDestination();
     }
     else
@@ -85,7 +76,7 @@ public class MobileNode extends Node
     double x = r.nextDouble() * _parent.width();
     double y = r.nextDouble() * _parent.height();
     _dest = new ImaginaryNode(x,y);
-    _moveSpeed = r.nextDouble() * _MAXSPEED;
+    _moveSpeed = r.nextDouble() * _maxSpeed;
   }
 
 }

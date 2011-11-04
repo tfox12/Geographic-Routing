@@ -34,18 +34,18 @@ public abstract class Graph implements Visualizable
   /** _nodes
    *  The set of nodes in the graph
    */
-  private ArrayList<Node> _nodes;
+  protected ArrayList<Node> _nodes;
   public ArrayList<Node> nodes() { return _nodes; }
 
   /** _edges
    *  The set of edges in the graph
    */
-  private ArrayList<Edge> _edges;
+  protected ArrayList<Edge> _edges;
 
   /**
    * This method has poymorphic behavior based on if this is a mobile / static graph
    */
-  public abstract Node spawnNode(double x, double y);
+  protected abstract Node spawnNode(double x, double y);
   
   /**
    * Graph nodes are constructed as to not be coincident. They are at least 1 away from eachother.
@@ -64,7 +64,8 @@ public abstract class Graph implements Visualizable
       @Override
       public void paintComponent(Graphics g)
       {
-        g.clearRect(0,0,_width,_height);
+        g.setColor(Color.white);
+        g.fillRect(0,0,(int)_width,(int)_height);
         visPaint(g);
       }
     };
@@ -131,7 +132,7 @@ public abstract class Graph implements Visualizable
   ////////////////////////////////////////////////////////////////////
   // begin Visualizable interface
 
-  private JPanel _canvas;
+  protected JPanel _canvas;
   public JPanel canvas() { return _canvas; }
 
   public void processKeyReleased(KeyEvent e)
