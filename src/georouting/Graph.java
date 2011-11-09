@@ -132,6 +132,15 @@ public abstract class Graph implements Visualizable
     return rtn;
   }
 	
+  /**
+   * Planarizing the graph removes edges so that no 2 edges intersect except for at verticies
+   * @param algorithm the planarization technique to apply to the graph to achieve planarization
+   */
+  public void planarize(PlanarizationAlgorithm algorithm)
+  {
+    _edges = algorithm.planarize(_edges);
+  }
+
 	public boolean isConnected(Node from, Node to)
 	{
 		HashSet<Node> touched = new HashSet<Node>();
