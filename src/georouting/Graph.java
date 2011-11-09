@@ -58,6 +58,7 @@ public abstract class Graph implements Visualizable
    */
   public Graph(double nodeDensity, double width, double height, ConnectivityContract cc)
   {
+    _wasPlanarized = false;
     _nodes = new ArrayList<Node>();
     _width = width;
     _height = height;
@@ -139,7 +140,11 @@ public abstract class Graph implements Visualizable
   public void planarize(PlanarizationAlgorithm algorithm)
   {
     _edges = algorithm.planarize(_edges);
+    _wasPlanarized = true;
   }
+
+  protected boolean _wasPlanarized;
+  public boolean wasPlanarized() { return _wasPlanarized; }
 
 	public boolean isConnected(Node from, Node to)
 	{

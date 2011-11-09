@@ -3,7 +3,7 @@ package georouting.traversalAlgorithms;
 import georouting.Graph;
 import georouting.Node;
 import georouting.PlanarizationAlgorithm;
-import georouting.TraversalAlgorithms;
+import georouting.TraversalAlgorithm;
 
 public abstract class PlanarTraversalAlgorithm extends TraversalAlgorithm
 {
@@ -26,9 +26,7 @@ public abstract class PlanarTraversalAlgorithm extends TraversalAlgorithm
     advanceAlgorithm();
   }
 
-  protected abstract advanceAlgorithm();
-
-  public abstract boolean isDone();
+  protected abstract void advanceAlgorithm();
 
   private void planarize() { _container.planarize(_pAlg); }
 }

@@ -16,7 +16,7 @@ public class VOID extends TraversalAlgorithm
   @Override
   public boolean done()
   {
-    return _current == _destination;
+    return _current.equals(_destination);
   }
 
   @Override
@@ -82,7 +82,7 @@ public class VOID extends TraversalAlgorithm
     else
     {
       moveTo(ccwWinner);
-	}
+    }
   }
 
   @Override
