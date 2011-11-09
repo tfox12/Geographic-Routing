@@ -37,8 +37,17 @@ public class SHORTEST extends TraversalAlgorithm
     ++_hops;
   }
 
+  @Override
+  public int hops()
+  {
+     if(_heads.isEmpty())
+         return -1;
+     else
+         return super.hops();
+  }
+
   public boolean done()
   {
-    return _heads.contains(_destination);
+    return _heads.contains(_destination) || _heads.isEmpty();
   }
 }

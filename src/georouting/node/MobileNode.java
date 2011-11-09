@@ -33,7 +33,11 @@ public class MobileNode extends Node
 
   private final double DEFAULT_SPEED = 1;
 
-	public void setSpeed(double s) { _maxSpeed = s; }
+	public void setSpeed(double s) 
+	{ 
+		_maxSpeed = s;
+		_moveSpeed = new Random().nextDouble() * _maxSpeed;
+	}
 	
   private final int DEFAULT_PAUSE = 5;
 	

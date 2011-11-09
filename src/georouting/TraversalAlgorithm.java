@@ -61,6 +61,7 @@ public abstract class TraversalAlgorithm implements Visualizable
       @Override
       public void paintComponent(Graphics g)
       {
+        super.paintComponent(g);
         visPaint(g);
       }
     };
@@ -83,6 +84,7 @@ public abstract class TraversalAlgorithm implements Visualizable
   public void processKeyReleased(KeyEvent e)
   {
     if(!done()) advance();
+    _container.processKeyReleased(e);
     _canvas.repaint();
   }
   public Dimension size() { return _container.size(); }

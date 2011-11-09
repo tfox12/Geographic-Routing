@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Random;
 import javax.swing.JPanel;
 
@@ -129,6 +131,29 @@ public abstract class Graph implements Visualizable
     }
     return rtn;
   }
+	
+	public boolean isConnected(Node from, Node to)
+	{
+		HashSet<Node> touched = new HashSet<Node>();
+		HashSet<Node> toProcess = new HashSet<Node>();
+		toProcess.add(from);
+		touched.add(from);
+		while(!toProcess.isEmpty())
+		{
+			Iterator<Node> itor = toProcess.iterator();
+			Node next = itor.next();
+			itor.remove();
+			for(Node n : next.neighborhood())
+			{
+				if(n == to) return true;
+				if(touched.add(n))
+				{
+					toProcess.add(n);
+				}
+			}
+		}
+		return false;
+	}
 
   ////////////////////////////////////////////////////////////////////
   // begin Visualizable interface

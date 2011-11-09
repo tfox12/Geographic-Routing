@@ -23,7 +23,8 @@ public class VOID extends TraversalAlgorithm
   public void advance()
   {
     if(done()) return;
-    if(_current.neighborhood().contains(_destination))
+	if(_current.neighborhood().isEmpty()) return;
+	if(_current.neighborhood().contains(_destination))
     {
       moveTo(_destination);
       return;
@@ -51,7 +52,7 @@ public class VOID extends TraversalAlgorithm
       }
       _butIDidThatLastTime = null;
     }
-    if(traversedIntersections.size() > 0 && 
+    if(!traversedIntersections.isEmpty() && 
        handledIntersection(traversedIntersections, justTraversed))
     {
       return;
@@ -59,11 +60,7 @@ public class VOID extends TraversalAlgorithm
     if(justTraversed.intersects(xd()))
     {
       _X = justTraversed.pointOfIntersection(xd());
-    }
-    if(justTraversed.distance(_X) < .0001)
-    {
       flipDirection();
-      advanceX();
     }
     moveTo(bestNeighbor());
     return;
@@ -85,8 +82,7 @@ public class VOID extends TraversalAlgorithm
     else
     {
       moveTo(ccwWinner);
-    }
-    advanceX();
+	}
   }
 
   @Override
@@ -122,11 +118,7 @@ public class VOID extends TraversalAlgorithm
     if(justTraversed.intersects(xd()))
     {
       _X = justTraversed.pointOfIntersection(xd());
-    }
-    if(justTraversed.distance(_X) < .0001)
-    {
       flipDirection();
-      advanceX();
     }
     ArrayList<Node> nextRoundWinners = new ArrayList<Node>();
     double winningAngle = Double.MAX_VALUE;
@@ -166,6 +158,10 @@ public class VOID extends TraversalAlgorithm
       }
     }
     _hops += movesToGetThere(_current,finalWinner);
+	  if(_hops == -1)
+	  {
+		  System.exit(1);
+	  }
     for(Edge edge : winners)
     {
       if(edge.containsNode(finalWinner))
@@ -201,23 +197,6 @@ public class VOID extends TraversalAlgorithm
   private Edge xd()
   {
     return _X.imaginaryEdgeWith(_destination);
-  }
-
-  private void advanceX()
-  {
-    ImaginaryNode winner = null;
-    double dist = Double.MAX_VALUE;
-    ArrayList<Edge> edges = _container.getIntersections(xd());
-    for(Edge e : edges)
-    {
-      ImaginaryNode temp = e.pointOfIntersection(xd());
-      if(temp.distance(_X) > 0 && temp.distance(_X) < dist)
-      {
-        winner = temp;
-        dist = temp.distance(_X);
-      }
-    }
-    _X = ( winner == null ) ? new ImaginaryNode(_destination) : winner;
   }
 
   private Edge _butIDidThatLastTime;
