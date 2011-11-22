@@ -30,6 +30,8 @@ public class MobileNode extends Node
    * represents where the node is trying to move to
    */
   private ImaginaryNode _dest;
+  private ImaginaryNode _prev;
+    public ImaginaryNode previousLocation() { return _prev; }
 
   private final double DEFAULT_SPEED = 1;
 
@@ -54,6 +56,7 @@ public class MobileNode extends Node
     _maxSpeed = DEFAULT_SPEED;
     _waitLength = DEFAULT_PAUSE;
     _waitCount = 0;
+    _prev = new ImaginaryNode(x,y);
     setNewDestination();
   }
 
@@ -66,6 +69,7 @@ public class MobileNode extends Node
    */
   public void move()
   {
+    _prev = new ImaginaryNode(_x,_y);
     if(_waitCount > 0) { --_waitCount; }
     else if(distance(_dest) < _moveSpeed || x() < _dest.x() != leftOf)
     {

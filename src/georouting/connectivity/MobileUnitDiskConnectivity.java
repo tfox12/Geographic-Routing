@@ -16,7 +16,7 @@ public class MobileUnitDiskConnectivity
     super(radius);
   }
 
-  public ArrayList<Edge> updateConnectivity(ArrayList<Node> nodes)
+  public ArrayList<Edge> updateConnectivity(ArrayList<Node> nodes, ArrayList<Edge> current)
   {
     HashSet<Edge> rtn = new HashSet<Edge>();
     for(Node a : nodes)

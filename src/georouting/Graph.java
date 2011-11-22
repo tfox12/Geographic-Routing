@@ -33,6 +33,9 @@ public abstract class Graph implements Visualizable
    */
   public float height() { return (float) _height; }
 
+  private float _unit;
+  public float unit() { return _unit; }
+
   /** _nodes
    *  The set of nodes in the graph
    */
@@ -62,6 +65,7 @@ public abstract class Graph implements Visualizable
     _nodes = new ArrayList<Node>();
     _width = width;
     _height = height;
+    _unit = cc.connectivityRange();
     _canvas = new JPanel(true)
     {
       @Override

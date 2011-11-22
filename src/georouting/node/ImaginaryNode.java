@@ -3,6 +3,7 @@ package georouting.node;
 import georouting.Edge;
 import georouting.Node;
 
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +27,7 @@ public class ImaginaryNode extends Node
 
   public ImaginaryNode(Node n)
   {
-    super(n.x(),n.y(),null);
+    super(n.x(),n.y(),n.parent());
   }
 
   public Edge imaginaryEdgeWith(Node target)
@@ -47,7 +48,10 @@ public class ImaginaryNode extends Node
   {
     public ImaginaryEdge(ImaginaryNode n1, Node n2) throws Exception
     {
-      super(new Node(n1.x(),n1.y(),null),n2);
+      super();
+      _n1 = n1;
+      _n2 = n2;
+      _segment = new Line2D.Float( n1.x(), n1.y(), n2.x(), n2.y() );
     }
   }
 }

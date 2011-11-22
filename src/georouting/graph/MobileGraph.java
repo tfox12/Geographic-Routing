@@ -47,7 +47,7 @@ public class MobileGraph extends Graph
     {
       ((MobileNode) n).move();
     }
-    _edges = _connectivity.updateConnectivity(_nodes);
+    _edges = _connectivity.updateConnectivity(_nodes,_edges);
     _wasPlanarized = false;
   }
 }

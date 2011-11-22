@@ -10,6 +10,8 @@ import java.util.Random;
 class StaticQuasiUnitDiskConnectivity implements ConnectivityContract
 {
 
+  public float connectivityRange() { return radius(); }
+
   private double _radius;
 
   public float radius() { return (float) _radius; }

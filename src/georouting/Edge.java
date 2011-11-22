@@ -30,7 +30,7 @@ public class Edge
   /** _segment
    *  This is used to aid computation of intersections
    */
-  private Line2D.Float _segment;
+  protected Line2D.Float _segment;
 
   /**
    * @return The geometric segment in euclidean space representing the edge
@@ -105,6 +105,13 @@ public class Edge
     _n1 = n1;
     _n2 = n2;
     _segment = new Line2D.Float( n1.x(), n1.y(), n2.x(), n2.y() );
+  }
+
+  protected Edge()
+  {
+      _n1 = null;
+      _n2 = null;
+      _segment = null;
   }
 
   /**

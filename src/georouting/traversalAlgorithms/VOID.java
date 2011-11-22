@@ -12,13 +12,6 @@ import java.util.ArrayList;
 
 public class VOID extends TraversalAlgorithm
 {
-
-  @Override
-  public boolean done()
-  {
-    return _current.equals(_destination);
-  }
-
   @Override
   public void advance()
   {
@@ -196,7 +189,7 @@ public class VOID extends TraversalAlgorithm
 
   private Edge xd()
   {
-    return _X.imaginaryEdgeWith(_destination);
+    return _X.imaginaryEdgeWith(_originalDestination);
   }
 
   private Edge _butIDidThatLastTime;

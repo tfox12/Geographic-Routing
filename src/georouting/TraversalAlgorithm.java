@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
+import georouting.node.ImaginaryNode;
 
 /**
  * <p>The traversal algorithm is the meat of the framework. It specifies how we want to
@@ -46,9 +47,24 @@ public abstract class TraversalAlgorithm implements Visualizable
   /**
    * Is the algorithm done?
    */
-  public abstract boolean done();
+  public boolean done()
+  {
+    return _destination.distance(_originalDestination) > 
+           _container.unit() || _current.equals(_destination);
+  }
+
+  /**
+   * Was the algorithm successful when it finished
+   * @precondition done() == true
+   */
+  public boolean successful()
+  {
+    return _current.equals(_destination);
+  }
 
   protected Graph _container;
+
+  protected ImaginaryNode _originalDestination;
 
   /**
    * @param s Starting point
@@ -68,6 +84,7 @@ public abstract class TraversalAlgorithm implements Visualizable
     _container = g;
     _source = _current = s;
     _destination = d;
+    _originalDestination = new ImaginaryNode(d);
     _hops = 0;
   }
 
