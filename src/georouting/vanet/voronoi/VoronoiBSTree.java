@@ -1,5 +1,6 @@
 package georouting.vanet.voronoi;
 
+import java.util.ArrayList;
 
 public class VoronoiBSTree
 {
@@ -27,7 +28,7 @@ public class VoronoiBSTree
             VoronoiBSTreeSiteNode split = _root.findNewBreak(site);
 
             // add a new edge that half-plane's the 2 sites
-            _sweepLine.addEdge(new VoronoiEdge(site,split);
+            _sweepLine.addEdge(new VoronoiEdge(site,split.site()));
 
             // create 3 new leaf nodes
             VoronoiBSTreeSiteNode left = this.new VoronoiBSTreeSiteNode(split.site());
@@ -42,7 +43,7 @@ public class VoronoiBSTree
 
             // left breakpoint
             VoronoiBSTreeBreakPointNode leftBreak =
-                this.new VoronoiBSTreeBreakPointNode(left,rightBreakpoint,mid);
+                this.new VoronoiBSTreeBreakPointNode(left,rightBreak,mid.site());
             left.resetParent(leftBreak);
             rightBreak.resetParent(leftBreak);
 
@@ -90,7 +91,7 @@ public class VoronoiBSTree
 
     public ArrayList<VoronoiVertexEvent> eventsForSite(VoronoiSite site)
     {
-        ArrayList<VoronoiVertexEvent result = new ArrayList<VoronoiVertexEvent>();
+        ArrayList<VoronoiVertexEvent> result = new ArrayList<VoronoiVertexEvent>();
         VoronoiSite[] prev = {null,null};
         _root.getVertexResults(prev,site,result);
         return result;
@@ -119,16 +120,16 @@ public class VoronoiBSTree
             _parent = newParent; 
         }
  
-        public VoronoiBSTreeNode(VoronoiBSTreeSiteNode parent)
+        public VoronoiBSTreeNode(VoronoiBSTreeNode parent)
         {   
             _parent = parent; 
             _left   = null; 
             _right  = null; 
         }
 
-        public VoronoiBSTreeNode(VoronoiBSTreeSiteNode parent,
-                                 VoronoiBSTreeSiteNode left,
-                                 VoronoiBSTreeSiteNode right)
+        public VoronoiBSTreeNode(VoronoiBSTreeNode parent,
+                                 VoronoiBSTreeNode left,
+                                 VoronoiBSTreeNode right)
         {   
             _parent = parent; 
             _left   = left; 
@@ -138,7 +139,7 @@ public class VoronoiBSTree
         
         public void swap(VoronoiBSTreeNode node)
         {
-            parent.swap(this,node);
+            _parent.swap(this,node);
         }
 
         protected void swap(VoronoiBSTreeNode child, VoronoiBSTreeNode newChild)
@@ -169,6 +170,7 @@ public class VoronoiBSTree
     protected class VoronoiBSTreeSiteNode extends VoronoiBSTreeNode
     {
         private VoronoiSite _site;
+        public VoronoiSite site() { return _site; }
         
         public VoronoiBSTreeSiteNode(VoronoiSite site)
         {
@@ -195,7 +197,7 @@ public class VoronoiBSTree
             if((previous[0] != null) &&
                ((previous[0] == addedSite && _site != addedSite) ||
                (_site == addedSite && previous[0] != addedSite))) // only 1 site object for each site, so we can compare memloc
-                    foundEvents.add(new VoronoiVertexEvent(previous[0],previous[1],_site);
+                    foundEvents.add(new VoronoiVertexEvent(previous[0],previous[1],_site));
                 
             previous[0] = previous[1];
             previous[1] = _site;
@@ -204,7 +206,7 @@ public class VoronoiBSTree
 
         public VoronoiBSTreeBreakPointNode findRemoveBreakpoint(VoronoiSite left,VoronoiSite mid,VoronoiSite right)
         {
-            throw new Exception("Should have not gotten to this point");
+            return null;
         }
         public VoronoiSite nextLeft()
         {
@@ -251,8 +253,8 @@ public class VoronoiBSTree
         public VoronoiBSTreeSiteNode findNewBreak(VoronoiSite site)
         {
             if(site.x() < getBreakPointX())
-                return _left.findNewBreak();
-            else return _right.findNewBreak();
+                return left().findNewBreak(site);
+            else return right().findNewBreak(site);
         }
 
         private double getBreakPointX()
@@ -275,44 +277,44 @@ public class VoronoiBSTree
                                     Math.pow(_leftSite.y() - _sweepLine.height() , 2) ) *
                                   ( Math.pow(_rightSite.x() - x                  , 2) + 
                                     Math.pow(_rightSite.y() - _sweepLine.height(), 2) ) );
-            return (_right instanceof VoronoiBSTreeBreakPointNode) ? x - t : x + t;
+            return (right() instanceof VoronoiBSTreeBreakPointNode) ? x - t : x + t;
         }
 
         public VoronoiSite[] getVertexResults(VoronoiSite[] previous,
                                               VoronoiSite addedSite, 
                                               ArrayList<VoronoiVertexEvent> foundEvents)
         {
-            previous = _left.getVertexResults(previous,addedSite,foundEvents);
-            return     _right.getVertexResults(previous,addedSite,foundEvents);
+            previous = left().getVertexResults(previous,addedSite,foundEvents);
+            return     right().getVertexResults(previous,addedSite,foundEvents);
         }
         
         public VoronoiBSTreeBreakPointNode findRemoveBreakpoint(VoronoiSite left,VoronoiSite mid,VoronoiSite right)
         {
-            if((left == leftSite && mid == rightSite) ||
-               (mid == leftSite && right = rightSite))
+            if((left == _leftSite && mid == _rightSite) ||
+               (mid == _leftSite && right == _rightSite))
                 return this;
             if(mid.x() < getBreakPointX())
-                return _left.findRemoveBreakpoint(left,mid,right);
+                return left().findRemoveBreakpoint(left,mid,right);
             else
-                return _right.findRemoveBreakpoint(left,mid,right);
+                return right().findRemoveBreakpoint(left,mid,right);
         }
 
         public void replaceBreak(VoronoiSite oldSite, VoronoiSite newSite)
         {
-            if(leftSite == oldSite)
-                leftSite = newSite;
-            else if(rightSite == oldSite)
-                rightSite = newSite;
+            if(_leftSite == oldSite)
+                _leftSite = newSite;
+            else if(_rightSite == oldSite)
+                _rightSite = newSite;
         }
 
         public VoronoiSite nextLeft()
         {
-            return left.nextLeft();
+            return left().nextLeft();
         }
 
         public VoronoiSite nextRight()
         {
-            return right.nextRight();
+            return right().nextRight();
         }
     }
 

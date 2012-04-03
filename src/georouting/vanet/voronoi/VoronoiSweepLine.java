@@ -27,11 +27,11 @@ public class VoronoiSweepLine
     public VoronoiSweepLine(ArrayList<VoronoiSite> sites)
     {
         _y = 0;
-        _beachLine = new VoronoiBSTree();
+        _beachLine = new VoronoiBSTree(this);
         _eventQueue = new PriorityQueue<VoronoiEvent>();
         _edges = new ArrayList<VoronoiEdge>();
         _incompleteEdges = new ArrayList<VoronoiEdge>();
-        _intersections = new ArrayList<VoronoiEdge>();
+        _intersections = new ArrayList<VoronoiIntersection>();
 
         for(VoronoiSite site : sites)
         {
@@ -49,7 +49,7 @@ public class VoronoiSweepLine
                 VoronoiSiteEvent siteEvent = (VoronoiSiteEvent) nextEvent;
                 
                 // add new point
-                VoronoiSite[] search = siteEvent.addSite(siteEvent.site());
+                VoronoiSite[] search = _beachLine.addSite(siteEvent.site());
                 
                 // remove stale vetex events
                 Iterator<VoronoiEvent> itor = _eventQueue.iterator();
@@ -80,32 +80,32 @@ public class VoronoiSweepLine
                     VoronoiEvent event = queueItor.next();
                     if(event instanceof VoronoiVertexEvent && 
                       ( ((VoronoiVertexEvent)event).left() == vertexEvent.mid() ||
-                        ((VoronoiVertexEvent)event).right() == vertexEvent.mid() )
+                        ((VoronoiVertexEvent)event).right() == vertexEvent.mid() ))
                     {
                         queueItor.remove();
                     }
                 }
-                _incompleteEdges.add(new VoronoiEdge(vertex.left(),vertex.right()));
+                _incompleteEdges.add(new VoronoiEdge(vertexEvent.left(),vertexEvent.right()));
                 
                 VoronoiCircle circle = new VoronoiCircle(vertexEvent.left(),
                                                          vertexEvent.mid(),
                                                          vertexEvent.right());
                 VoronoiIntersection endpoint = new VoronoiIntersection(circle.x(),circle.y());
-                _intersections.add(endpoint):
+                _intersections.add(endpoint);
 
                 Iterator<VoronoiEdge> ieItor = _incompleteEdges.iterator();
                 int count = 0;
                 while(count < 2 && ieItor.hasNext())
                 {
                     VoronoiEdge edge = ieItor.next();
-                    if((edge.endpoints()[0] == vertex.left() && edge.endpoints()[1] == vertex.mid()) ||
-                       (edge.endpoints()[0] == vertex.mid() && edge.endpoints()[1] == vertex.left()))||
-                       (edge.endpoints()[0] == vertex.mid() && edge.endpoints()[1] == vertex.right())||
-                       (edge.endpoints()[0] == vertex.right() && edge.endpoints()[1] == vertex.mid()))
+                    if((edge.s1() == vertexEvent.left() && edge.s2() == vertexEvent.mid()) ||
+                       (edge.s1() == vertexEvent.mid() && edge.s2() == vertexEvent.left()) ||
+                       (edge.s1() == vertexEvent.mid() && edge.s2() == vertexEvent.right())||
+                       (edge.s1() == vertexEvent.right() && edge.s2() == vertexEvent.mid()))
                     {
                         edge.addEndpoint(endpoint);
                         ++count;
-                        if(edge.isComplete())
+                        if(edge.complete())
                         {
                             ieItor.remove();
                             _edges.add(edge);

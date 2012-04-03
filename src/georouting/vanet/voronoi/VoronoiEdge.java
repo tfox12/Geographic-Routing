@@ -13,14 +13,16 @@ public class VoronoiEdge
     private VoronoiSite _s1;
     private VoronoiSite _s2;
 
-    private VoronoiIntersection[] _endpoints;
+    public VoronoiSite s1(){ return _s1; }
+    public VoronoiSite s2(){ return _s2; }
+
+    private VoronoiIntersection[] _endpoints = {null,null};
     public VoronoiIntersection[] endpoints() { return _endpoints; }   
  
-    public VoronoiEdge(VoronoiSite s1, VornoiSite s2)
+    public VoronoiEdge(VoronoiSite s1, VoronoiSite s2)
     {
         _s1 = s1;
         _s2 = s2;
-        _endpoints = {null, null};
     }
 
     public boolean complete() { return _endpoints[0] != null && _endpoints[1] != null; }

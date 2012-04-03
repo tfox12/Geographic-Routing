@@ -1,4 +1,4 @@
-import georouting.vanet.voronoi;
+package georouting.vanet.voronoi;
 
 public class VoronoiIntersection
 {
@@ -12,6 +12,5 @@ public class VoronoiIntersection
     {
         _x = x;
         _y = y;
-        _edges = edges;
     }
 }

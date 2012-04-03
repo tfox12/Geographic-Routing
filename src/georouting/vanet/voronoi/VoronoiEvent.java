@@ -8,6 +8,6 @@ public abstract class VoronoiEvent implements Comparable<VoronoiEvent>
 
     public int compareTo(VoronoiEvent e)
     {
-        return _y - e._y;
+        return (int)(_y - e._y);
     }
 }

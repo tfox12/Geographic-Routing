@@ -11,7 +11,7 @@ public class VoronoiGraph
     private ArrayList<VoronoiIntersection> _intersections;
 
     public ArrayList<VoronoiEdge> edges() { return _edges; }
-    public ArrayList<VoronoiIntersection> intersections() { return _intersections }
+    public ArrayList<VoronoiIntersection> intersections() { return _intersections; }
 
     private double _width, _height;
 
@@ -21,7 +21,7 @@ public class VoronoiGraph
     {
         _sites = new ArrayList<VoronoiSite>();
         _edges = new ArrayList<VoronoiEdge>();
-        _verticeis = new ArrayList<VoronoiVertex>();
+        _intersections = new ArrayList<VoronoiIntersection>();
 
         _width = width;
         _height = height;
@@ -36,7 +36,7 @@ public class VoronoiGraph
 
         _sweepLine = new VoronoiSweepLine(_sites);
         _sweepLine.sweep();
-        _edges = sweepLine.edges();
-        _intersections = sweepLine.intersections();
+        _edges = _sweepLine.edges();
+        _intersections = _sweepLine.intersections();
     }
 }

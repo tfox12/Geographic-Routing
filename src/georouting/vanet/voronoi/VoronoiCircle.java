@@ -42,7 +42,7 @@ public class VoronoiCircle
         else
         {
             _x = (Yrc + m1*Xcl - m2*Xrc - Ycl) / (m1 - m2);
-            _y = (m1*m2*(Xrc - Xcl) + m2*Ycl - m1*Yrc) / (m2 - m1)
+            _y = (m1*m2*(Xrc - Xcl) + m2*Ycl - m1*Yrc) / (m2 - m1);
         }
 
         _radius = Math.sqrt( Math.pow(_y - left.y(),2) +
@@ -51,6 +51,6 @@ public class VoronoiCircle
 
     public double x()    { return _x; }
     public double y()    { return _y; }
-    public double radius { return _radius; }
+    public double radius() { return _radius; }
     public double greatestY() { return _y + _radius; }
 }
