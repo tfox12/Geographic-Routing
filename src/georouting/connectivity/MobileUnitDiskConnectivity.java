@@ -4,6 +4,7 @@ import georouting.Edge;
 import georouting.MobileConnectivityContract;
 import georouting.Node;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 
 public class MobileUnitDiskConnectivity
@@ -16,7 +17,7 @@ public class MobileUnitDiskConnectivity
     super(radius);
   }
 
-  public ArrayList<Edge> updateConnectivity(ArrayList<Node> nodes, ArrayList<Edge> current)
+  public List<Edge> updateConnectivity(List<Node> nodes, List<Edge> current)
   {
     HashSet<Edge> rtn = new HashSet<Edge>();
     for(Node a : nodes)

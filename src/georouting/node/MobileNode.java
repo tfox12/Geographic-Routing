@@ -43,8 +43,13 @@ public class MobileNode extends Node
 	
   private final int DEFAULT_PAUSE = 5;
 	
-	public void setPause(int p) { _waitLength = p; }
-	
+  public void setPause(int p) { _waitLength = p; }
+
+  public MobileNode(double x, double y, Graph g)
+  {
+      super(x,y,g);
+  }
+
   /**
    * @param x X coordinate
    * @param y Y coordinate

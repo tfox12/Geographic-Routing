@@ -9,6 +9,7 @@ import georouting.node.ImaginaryNode;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VOID extends TraversalAlgorithm
 {
@@ -30,7 +31,7 @@ public class VOID extends TraversalAlgorithm
     Edge justTraversed = null;
     try { justTraversed = new Edge(_previous,_current); }
     catch(Exception e) { System.err.println("Critical Eror"); System.exit(1); }
-    ArrayList<Edge> traversedIntersections = justTraversed.intersections();
+    List<Edge> traversedIntersections = justTraversed.intersections();
     if(_butIDidThatLastTime != null)
     {
       float distance = justTraversed.pointOfIntersection(_butIDidThatLastTime)
@@ -86,9 +87,9 @@ public class VOID extends TraversalAlgorithm
     canvas().repaint();
   }
 
-  private boolean handledIntersection(ArrayList<Edge> traversedIntersections, Edge justTraversed)
+  private boolean handledIntersection(List<Edge> traversedIntersections, Edge justTraversed)
   {
-    ArrayList<Edge> winners = new ArrayList<Edge>();
+    List<Edge> winners = new ArrayList<Edge>();
     ImaginaryNode winningPoint = null;
     double dist = Double.MAX_VALUE;
     for(Edge edge : traversedIntersections)
@@ -113,7 +114,7 @@ public class VOID extends TraversalAlgorithm
       _X = justTraversed.pointOfIntersection(xd());
       flipDirection();
     }
-    ArrayList<Node> nextRoundWinners = new ArrayList<Node>();
+    List<Node> nextRoundWinners = new ArrayList<Node>();
     double winningAngle = Double.MAX_VALUE;
     for(Edge edge : winners)
     {
@@ -209,7 +210,7 @@ public class VOID extends TraversalAlgorithm
 
   private Node bestNeighbor()
   {
-    ArrayList<Node> neighborhood = _current.neighborhood();
+    List<Node> neighborhood = _current.neighborhood();
     Node rtn = _current;
     double angle = Double.MAX_VALUE;
     for(Node n : neighborhood)

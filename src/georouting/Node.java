@@ -3,7 +3,7 @@ package georouting;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Node
 {
@@ -93,7 +93,7 @@ public class Node
    * Get the neighborhood of this node
    * @return All of the neighbors of this node according to the parent graph
    */
-  public ArrayList<Node> neighborhood()
+  public List<Node> neighborhood()
   {
     return _parent.getNeighborhood(this);
   }

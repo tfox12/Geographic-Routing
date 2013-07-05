@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
@@ -39,19 +40,41 @@ public abstract class Graph implements Visualizable
   /** _nodes
    *  The set of nodes in the graph
    */
-  protected ArrayList<Node> _nodes;
-  public ArrayList<Node> nodes() { return _nodes; }
+  protected List<Node> _nodes;
+  public List<Node> nodes() { return _nodes; }
 
   /** _edges
    *  The set of edges in the graph
    */
-  protected ArrayList<Edge> _edges;
+  protected List<Edge> _edges;
 
   /**
    * This method has poymorphic behavior based on if this is a mobile / static graph
    */
   protected abstract Node spawnNode(double x, double y);
   
+  public Graph(double width, double height, ConnectivityContract cc, List<Node> nodes)
+  {
+    _wasPlanarized = false;
+    _nodes = nodes;
+    _width = width;
+    _height = height;
+    _unit = cc.connectivityRange();
+    _canvas = new JPanel(true)
+    {
+      @Override
+      public void paintComponent(Graphics g)
+      {
+        super.paintComponent(g);
+        g.setColor(Color.white);
+        g.fillRect(0,0,(int)_width,(int)_height);
+        visPaint(g);
+      }
+    };
+    _canvas.setPreferredSize(new Dimension((int)width,(int)height));
+    _edges = cc.constructionConnectivity(_nodes);
+  }
+
   /**
    * Graph nodes are constructed as to not be coincident. They are at least 1 away from eachother.
    * @param nodeDensity Average nodes per unit
@@ -107,7 +130,7 @@ public abstract class Graph implements Visualizable
    * gets the 1 hop neighbors of node n
    * @param n the node we want to use as the neighborhood reference
    */
-  public ArrayList<Node> getNeighborhood(Node n)
+  public List<Node> getNeighborhood(Node n)
   {
     ArrayList<Node> rtn = new ArrayList<Node>();
     for(Edge e : _edges)
@@ -124,7 +147,7 @@ public abstract class Graph implements Visualizable
    * returns all of the edges in the set of edges that intersect the provided edge
    * @param e the edge we are checking for intersection
    */
-  public ArrayList<Edge> getIntersections(Edge e)
+  public List<Edge> getIntersections(Edge e)
   {
     ArrayList<Edge> rtn = new ArrayList<Edge>();
     for(Edge other : _edges)

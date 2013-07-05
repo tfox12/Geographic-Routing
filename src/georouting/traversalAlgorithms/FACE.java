@@ -7,7 +7,7 @@ import georouting.PlanarizationAlgorithm;
 import georouting.node.ImaginaryNode;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
+import java.util.List;
 
 public class FACE extends PlanarTraversalAlgorithm
 {
@@ -106,7 +106,7 @@ public class FACE extends PlanarTraversalAlgorithm
 
   private Node bestNeighbor()
   {
-    ArrayList<Node> neighborhood = _current.neighborhood();
+    List<Node> neighborhood = _current.neighborhood();
     Node rtn = _current;
     double angle = Double.MAX_VALUE;
     for(Node n : neighborhood)

@@ -4,6 +4,7 @@ import georouting.ConnectivityContract;
 import georouting.Node;
 import georouting.Edge;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 
 public class StaticUnitDiskConnectivity implements ConnectivityContract
@@ -20,7 +21,7 @@ public class StaticUnitDiskConnectivity implements ConnectivityContract
     _radius = radius;
   }
 
-  public ArrayList<Edge> constructionConnectivity(ArrayList<Node> nodes)
+  public List<Edge> constructionConnectivity(List<Node> nodes)
   {
     HashSet<Edge> rtn = new HashSet<Edge>();
     for(Node a : nodes)

@@ -6,7 +6,7 @@ import georouting.PlanarizationAlgorithm;
 import java.awt.geom.Point2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Area;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Iterator;
 
 /**
@@ -24,7 +24,7 @@ import java.util.Iterator;
 public class GabrialGraph extends PlanarizationAlgorithm
 {
 
-  public ArrayList<Edge> planarize(ArrayList<Edge> edges)
+  public List<Edge> planarize(List<Edge> edges)
   { // the return is redundent, the array is going to be modified during the algorithm
     // which will affect the call to neighborhood, thus this approch will actually work
     // (recall that neighborhood is resolved based on edge connections)

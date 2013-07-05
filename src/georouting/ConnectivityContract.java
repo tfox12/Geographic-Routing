@@ -1,10 +1,10 @@
 package georouting;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ConnectivityContract
 {
   public float connectivityRange();
-  public ArrayList<Edge> constructionConnectivity( ArrayList<Node> nodes);
+  public List<Edge> constructionConnectivity( List<Node> nodes);
   public int densityToNumberOfNodes(double density, double width, double height);
 }

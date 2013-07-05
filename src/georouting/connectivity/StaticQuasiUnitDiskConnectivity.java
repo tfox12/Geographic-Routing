@@ -4,6 +4,7 @@ import georouting.ConnectivityContract;
 import georouting.Node;
 import georouting.Edge;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -35,7 +36,7 @@ class StaticQuasiUnitDiskConnectivity implements ConnectivityContract
     _probability = probability;
   }
 
-  public ArrayList<Edge> constructionConnectivity(ArrayList<Node> nodes)
+  public List<Edge> constructionConnectivity(List<Node> nodes)
   {
     HashSet<Edge> rtn = new HashSet<Edge>();
     for(Node a : nodes)

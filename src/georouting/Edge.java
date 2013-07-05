@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Edge
 {
@@ -140,7 +141,7 @@ public class Edge
     return "( " + n1() + " , " + n2() + " )";
   }
 
-  public ArrayList<Edge> intersections()
+  public List<Edge> intersections()
   {
     return _n1.parent().getIntersections(this);
   }

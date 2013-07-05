@@ -1,8 +1,8 @@
 package georouting;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class PlanarizationAlgorithm
 {
-  public abstract ArrayList<Edge> planarize(ArrayList<Edge> edges);
+  public abstract List<Edge> planarize(List<Edge> edges);
 }

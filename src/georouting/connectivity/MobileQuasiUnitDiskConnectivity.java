@@ -5,6 +5,7 @@ import georouting.MobileConnectivityContract;
 import georouting.Node;
 import georouting.node.MobileNode;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class MobileQuasiUnitDiskConnectivity
     super(radius,innerRadius,probability);
   }
 
-  public ArrayList<Edge> updateConnectivity(ArrayList<Node> nodes, ArrayList<Edge> current)
+  public List<Edge> updateConnectivity(List<Node> nodes, List<Edge> current)
   {
     HashSet<Edge> rtn = new HashSet<Edge>();
     

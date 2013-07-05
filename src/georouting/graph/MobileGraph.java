@@ -2,6 +2,7 @@ package georouting.graph;
 
 import georouting.Graph;
 import georouting.MobileConnectivityContract;
+import java.util.List;
 import georouting.Node;
 import georouting.node.MobileNode;
 import java.awt.event.KeyEvent;
@@ -20,6 +21,12 @@ public class MobileGraph extends Graph
   }
 
   private MobileConnectivityContract _connectivity;
+
+  public MobileGraph(double width, double height, MobileConnectivityContract mcc, List<Node> nodes)
+  {
+    super(width, height, mcc, nodes);
+    _connectivity = mcc;
+  }
 
   public MobileGraph(double nodeSpeed, int pauseTime, double density, double width, double height, MobileConnectivityContract mcc)
   {

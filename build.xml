@@ -1,5 +1,5 @@
 <?xml version="1.0" ?> 
-<project name="HelloWorld" default="compileTest">
+<project name="FoxyGraph" default="compileTest">
 
   <target name="init">
     <mkdir dir="build/classes" />
@@ -9,11 +9,23 @@
   </target>
 
   <target name="compile" depends="init">
-    <javac srcdir="src" destdir="build/classes" />
+    <javac srcdir="src" destdir="build/classes">
+      <classpath>
+        <fileset dir="lib">
+          <include name="*.jar" />
+        </fileset>
+      </classpath>
+    </javac>
   </target>
 
   <target name="compileTest" depends="compress">
-    <javac srcdir="unit_tests" destdir="unit_tests/classes" classpath="dist/georouting.jar" />
+    <javac srcdir="unit_tests" destdir="unit_tests/classes" classpath="dist/georouting.jar">
+      <classpath>
+        <fileset dir="lib">
+          <include name="*.jar" />
+        </fileset>
+      </classpath>
+    </javac>
   </target>
                       
   <target name="compress" depends="compile">
