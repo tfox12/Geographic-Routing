@@ -34,6 +34,7 @@ public class Test
             e.printStackTrace(System.err);
             System.exit(1);
         }
+        u.initialize();
 
         // The universe has been init'd.
         Graph graph = new Graph(u);
